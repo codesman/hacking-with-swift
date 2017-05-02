@@ -32,6 +32,15 @@ class ViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return images.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Image", for: indexPath)
+        cell.textLabel?.text = images[indexPath.row]
+        
+        return cell
+    }
 }
 
