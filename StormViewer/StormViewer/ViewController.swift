@@ -9,10 +9,22 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    lazy var images = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        let manager = FileManager.default
+        let path = Bundle.main.resourcePath!
+        let items = try! manager.contentsOfDirectory(atPath: path)
+        
+        for item in items {
+            guard item.hasPrefix("nssl") else { continue }
+            
+            images.append(item)
+        }
     }
 
     override func didReceiveMemoryWarning() {
