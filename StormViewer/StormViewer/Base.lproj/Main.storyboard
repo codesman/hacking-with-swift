@@ -47,6 +47,38 @@
             </objects>
             <point key="canvasLocation" x="960" y="130.98591549295776"/>
         </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="EvP-hr-H9N">
+            <objects>
+                <viewController storyboardIdentifier="Detail" id="5P6-4d-Yug" customClass="DetailViewController" customModule="StormViewer" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Guh-3g-Ysn"/>
+                        <viewControllerLayoutGuide type="bottom" id="qdE-jA-0ZL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jEC-bg-eUt">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="o82-kH-nxz">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="o82-kH-nxz" firstAttribute="bottom" secondItem="qdE-jA-0ZL" secondAttribute="top" id="6ES-7y-7xM"/>
+                            <constraint firstAttribute="trailing" secondItem="o82-kH-nxz" secondAttribute="trailing" id="Euy-9u-6ZG"/>
+                            <constraint firstItem="o82-kH-nxz" firstAttribute="top" secondItem="jEC-bg-eUt" secondAttribute="top" id="di3-b4-c4o"/>
+                            <constraint firstItem="o82-kH-nxz" firstAttribute="leading" secondItem="jEC-bg-eUt" secondAttribute="leading" id="hRa-e0-bcR"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="o82-kH-nxz" id="JzD-zI-QMQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pch-fR-nhG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1689.375" y="130.98591549295776"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="zzy-Lu-sj7">
             <objects>
