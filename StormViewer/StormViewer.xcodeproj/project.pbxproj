@@ -22,6 +22,7 @@
 		9C1BC1D71EB8F03800F886F5 /* nssl0049.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9C1BC1CD1EB8F03800F886F5 /* nssl0049.jpg */; };
 		9C1BC1D81EB8F03800F886F5 /* nssl0051.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9C1BC1CE1EB8F03800F886F5 /* nssl0051.jpg */; };
 		9C1BC1D91EB8F03800F886F5 /* nssl0091.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9C1BC1CF1EB8F03800F886F5 /* nssl0091.jpg */; };
+		9C1BC1DB1EB8FC6C00F886F5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1BC1DA1EB8FC6C00F886F5 /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		9C1BC1CD1EB8F03800F886F5 /* nssl0049.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nssl0049.jpg; sourceTree = "<group>"; };
 		9C1BC1CE1EB8F03800F886F5 /* nssl0051.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nssl0051.jpg; sourceTree = "<group>"; };
 		9C1BC1CF1EB8F03800F886F5 /* nssl0091.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nssl0091.jpg; sourceTree = "<group>"; };
+		9C1BC1DA1EB8FC6C00F886F5 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 			children = (
 				9C1BC1B31EB8EF1800F886F5 /* AppDelegate.swift */,
 				9C1BC1B51EB8EF1800F886F5 /* ViewController.swift */,
+				9C1BC1DA1EB8FC6C00F886F5 /* DetailViewController.swift */,
 				9C1BC1B71EB8EF1800F886F5 /* Main.storyboard */,
 				9C1BC1BA1EB8EF1800F886F5 /* Assets.xcassets */,
 				9C1BC1BC1EB8EF1800F886F5 /* LaunchScreen.storyboard */,
@@ -184,6 +187,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C1BC1DB1EB8FC6C00F886F5 /* DetailViewController.swift in Sources */,
 				9C1BC1B61EB8EF1800F886F5 /* ViewController.swift in Sources */,
 				9C1BC1B41EB8EF1800F886F5 /* AppDelegate.swift in Sources */,
 			);
@@ -351,6 +355,7 @@
 				9C1BC1C41EB8EF1800F886F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
