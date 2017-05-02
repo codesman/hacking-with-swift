@@ -16,6 +16,8 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        title = "Storm Viewer"
+        
         let manager = FileManager.default
         let path = Bundle.main.resourcePath!
         let items = try! manager.contentsOfDirectory(atPath: path)
