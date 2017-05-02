@@ -42,4 +42,12 @@ class ViewController: UITableViewController {
         
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let viewController = storyboard?.instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
+            viewController.selectedImage = images[indexPath.row]
+            
+            navigationController?.pushViewController(viewController, animated: true)
+        }
+    }
 }
