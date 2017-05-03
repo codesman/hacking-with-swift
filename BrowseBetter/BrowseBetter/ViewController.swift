@@ -21,7 +21,13 @@ class ViewController: UIViewController, WKNavigationDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .plain, target: self, action: #selector(openTapped))
+        
+        if let url = URL(string: "https://www.hackingwithswift.com") {
+            webView.load(URLRequest(url: url))
+            webView.allowsBackForwardNavigationGestures = true
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,5 +36,8 @@ class ViewController: UIViewController, WKNavigationDelegate {
     }
 
 
+    func openTapped() {
+        
+    }
 }
 
