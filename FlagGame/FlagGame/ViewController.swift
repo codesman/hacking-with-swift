@@ -14,9 +14,29 @@ class ViewController: UIViewController {
     @IBOutlet var buttonTwo: UIButton!
     @IBOutlet var buttonThree: UIButton!
     
+    var countries = [String]()
+    var score = 0
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        countries += [
+            "estonia",
+            "france",
+            "germany",
+            "ireland",
+            "italy",
+            "monaco",
+            "nigeria",
+            "poland",
+            "russia",
+            "spain",
+            "uk",
+            "us"
+        ]
+        
+        askQuestion()
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,5 +45,8 @@ class ViewController: UIViewController {
     }
 
 
+    func askQuestion(){
+        
+    }
 }
 
