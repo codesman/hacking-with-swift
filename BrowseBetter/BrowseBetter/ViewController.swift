@@ -37,7 +37,25 @@ class ViewController: UIViewController, WKNavigationDelegate {
 
 
     func openTapped() {
+        let alert = UIAlertController(title: "Open Page...", message: nil, preferredStyle: .actionSheet)
         
+        alert.addAction(UIAlertAction(title: "apple.com", style: .default, handler: openPage))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        alert.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
+    
+        present(alert, animated:  true)
+    }
+    
+    func openPage(action: UIAlertAction!) {
+        if let url = URL(string: "https://\(String(describing: action.title))") {
+            webView.load(URLRequest(url: url))
+        }
+        
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        title = webView.title
     }
 }
 
