@@ -36,6 +36,14 @@ class ViewController: UIViewController {
             "us"
         ]
         
+        buttonOne.layer.borderWidth = 1
+        buttonTwo.layer.borderWidth = 1
+        buttonThree.layer.borderWidth = 1
+        
+        buttonOne.layer.borderColor = UIColor.lightGray.cgColor
+        buttonTwo.layer.borderColor = UIColor.lightGray.cgColor
+        buttonThree.layer.borderColor = UIColor.lightGray.cgColor
+        
         askQuestion()
     }
 
@@ -45,8 +53,10 @@ class ViewController: UIViewController {
     }
 
 
-    func askQuestion(){
-        
+    func askQuestion() {
+        buttonOne.setImage(UIImage(named: countries[0]), for: .normal)
+        buttonTwo.setImage(UIImage(named: countries[1]), for: .normal)
+        buttonThree.setImage(UIImage(named: countries[2]), for: .normal)
     }
 }
 
