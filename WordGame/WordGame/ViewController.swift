@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GameplayKit
 
 class ViewController: UITableViewController {
     
@@ -17,6 +18,7 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         populateWords()
+        startGame()
     }
     
     func populateWords() {
@@ -28,6 +30,15 @@ class ViewController: UITableViewController {
         }
         
         allWords = words.components(separatedBy: "\n")
+    }
+    
+    func startGame() {
+        guard let allWords = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: allWords) as? [String] else { return }
+        
+        title = allWords[0]
+        usedWords.removeAll(keepingCapacity: true)
+        tableView.reloadData()
+        
     }
 
     override func didReceiveMemoryWarning() {
