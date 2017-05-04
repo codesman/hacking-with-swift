@@ -23,6 +23,8 @@ class ViewController: UIViewController, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .plain, target: self, action: #selector(openTapped))
         
         progressView = UIProgressView(progressViewStyle: .default)
@@ -40,6 +42,12 @@ class ViewController: UIViewController, WKNavigationDelegate {
             webView.allowsBackForwardNavigationGestures = true
         }
     }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "estimatedProgress" {
+            progressView.progress = Float(webView.estimatedProgress)
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -51,17 +59,18 @@ class ViewController: UIViewController, WKNavigationDelegate {
         let alert = UIAlertController(title: "Open Page...", message: nil, preferredStyle: .actionSheet)
         
         alert.addAction(UIAlertAction(title: "apple.com", style: .default, handler: openPage))
+        alert.addAction(UIAlertAction(title: "hackingwithswift.com", style: .default, handler: openPage))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
-        alert.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
+//        alert.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
     
         present(alert, animated:  true)
     }
     
     func openPage(action: UIAlertAction!) {
-        if let url = URL(string: "https://\(String(describing: action.title))") {
-            webView.load(URLRequest(url: url))
-        }
+        guard let title = action.title, let url = URL(string: "https://" + title) else { return }
+        
+         webView.load(URLRequest(url: url))
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
