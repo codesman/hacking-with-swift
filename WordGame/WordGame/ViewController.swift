@@ -53,31 +53,25 @@ class ViewController: UITableViewController {
             let indexPath = IndexPath(row: 0, section: 0)
             tableView.insertRows(at: [indexPath], with: .automatic)
         } else {
-            var errorTitle = ""
-            var errorMessage = ""
-            
             // TODO: Refactor with switch
             if !wordNotUsed(from: answerLowercased) {
-                errorTitle = "Word used already"
-                errorMessage = "Be more original!"
+                showErrorAlert(title: "Word used already", message: "Be more original!")
                 
             } else if !wordIsPossible(from: answerLowercased) {
                 if let titleLowercased = title?.lowercased() {
-                    errorTitle = "Word not possible"
-                    errorMessage = "You can't spell that word from \(titleLowercased)"
+                    showErrorAlert(title: "Word not possible", message: "You can't spell that word from \(titleLowercased)")
                 }
             } else if !wordIsReal(from: answerLowercased){
-                errorTitle = "Word not recognized"
-                errorMessage = "You can't just make them up, you know!"
-                
+                showErrorAlert(title: "Word not recognized", message: "You can't just make them up, you know!")
             }
-            
-            // TODO: Implement showErrorMessage in error cases
-            let alert = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
-            
-            present(alert, animated: true)
         }
+    }
+    
+    func showErrorAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        
+        present(alert, animated: true)
     }
     
     func wordIsPossible(from word: String) -> Bool {
