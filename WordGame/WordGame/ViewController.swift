@@ -100,8 +100,6 @@ class ViewController: UITableViewController {
     }
     
     func wordIsReal(from word: String) -> Bool {
-        // TODO: Check answer < 3 letters
-        
         let checker = UITextChecker()
         let range = NSMakeRange(0, word.utf16.count)
         let misspelled = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
@@ -110,10 +108,15 @@ class ViewController: UITableViewController {
     }
     
     func populateWords() {
-        // TODO: Handle no path case
-        guard let path = Bundle.main.path(forResource: "words", ofType: "txt") else { return }
+        let defaultWords = ["silkworm"]
+        
+        guard let path = Bundle.main.path(forResource: "words", ofType: "txt") else {
+            allWords = defaultWords
+            return
+        }
+        
         guard let words = try? String(contentsOfFile: path) else {
-            allWords = ["silkworm"]
+            allWords = defaultWords
             return
         }
         
