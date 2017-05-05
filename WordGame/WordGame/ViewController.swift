@@ -14,6 +14,29 @@ class ViewController: UITableViewController {
     var allWords = [String]()
     var usedWords = [String]()
     
+    private enum Word {
+        case tooShort
+        case isStartWord
+        case wasUsed
+        case notPossible(String)
+        case notReal
+        
+        func error() -> [String: String] {
+            switch self {
+            case .tooShort:
+                return ["title": "Word too short", "message": "Your words must be at least 3 characters."]
+            case .isStartWord:
+                return ["title": "Start word entered", "message": "The start word doesn't count as a word!"]
+            case .wasUsed:
+                return ["title": "Word used already", "message": "Be more original!"]
+            case .notPossible(let titleLowercased):
+                return ["title": "Word not possible", "message": "You can't spell that word from \(titleLowercased)"]
+            case .notReal:
+                return ["title": "Word not recognized", "message": "You can't just make them up, you know!"]
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -68,12 +91,12 @@ class ViewController: UITableViewController {
     
     private func submit(_ answer: String) {
         guard answer.characters.count > 2 else {
-            showErrorAlert(title: "Word too short", message: "Your words must be at least 3 characters.")
+            showErrorAlert(title: Word.tooShort.error()["title"]!, message: Word.tooShort.error()["message"]!)
             return
         }
         
         guard let titleLowercased = title?.lowercased(), answer != titleLowercased else {
-            showErrorAlert(title: "Start word entered", message: "The start word doesn't count as a word!")
+            showErrorAlert(title: Word.isStartWord.error()["title"]!, message: Word.isStartWord.error()["message"]!)
             return
         }
         
@@ -89,13 +112,13 @@ class ViewController: UITableViewController {
         } else {
             // TODO: Refactor with switch
             if !wordNotUsed(from: answerLowercased) {
-                showErrorAlert(title: "Word used already", message: "Be more original!")
+                showErrorAlert(title: Word.wasUsed.error()["title"]!, message: Word.wasUsed.error()["message"]!)
                 
             } else if !wordIsPossible(from: answerLowercased) {
-                showErrorAlert(title: "Word not possible", message: "You can't spell that word from \(titleLowercased)")
+                showErrorAlert(title: Word.notPossible(answerLowercased).error()["title"]!, message: Word.notPossible(answerLowercased).error()["message"]!)
                 
             } else if !wordIsReal(from: answerLowercased){
-                showErrorAlert(title: "Word not recognized", message: "You can't just make them up, you know!")
+                showErrorAlert(title: Word.notReal.error()["title"]!, message: Word.notReal.error()["message"]!)
             }
         }
     }
