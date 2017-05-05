@@ -47,9 +47,13 @@ class ViewController: UITableViewController {
             return
         }
         
+        guard let titleLowercased = title?.lowercased(), answer != titleLowercased else {
+            showErrorAlert(title: "Start word entered", message: "The start word doesn't count as a word!")
+            return
+        }
+        
         let answerLowercased = answer.lowercased()
         
-        // TODO: Disallow entering start word
         if wordNotUsed(from: answerLowercased)
             && wordIsPossible(from: answerLowercased)
             && wordIsReal(from: answerLowercased){
@@ -63,9 +67,8 @@ class ViewController: UITableViewController {
                 showErrorAlert(title: "Word used already", message: "Be more original!")
                 
             } else if !wordIsPossible(from: answerLowercased) {
-                if let titleLowercased = title?.lowercased() {
-                    showErrorAlert(title: "Word not possible", message: "You can't spell that word from \(titleLowercased)")
-                }
+                showErrorAlert(title: "Word not possible", message: "You can't spell that word from \(titleLowercased)")
+                
             } else if !wordIsReal(from: answerLowercased){
                 showErrorAlert(title: "Word not recognized", message: "You can't just make them up, you know!")
             }
