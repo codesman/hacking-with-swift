@@ -33,6 +33,7 @@ class ViewController: UITableViewController {
         let submitAction = UIAlertAction(title: "Submit", style: .default) { [unowned self, alert] _ in
             guard let answerField = alert.textFields?[0] else { return }
             guard let answer = answerField.text else { return }
+            answerField.autocorrectionType = .no
             
             self.submit(answer)
         }
