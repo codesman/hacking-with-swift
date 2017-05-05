@@ -44,6 +44,8 @@ class ViewController: UIViewController {
         view.addSubview(labelThree)
         view.addSubview(labelFour)
         view.addSubview(labelFive)
+        
+        let views = ["labelOne": labelTwo, "labelTwo": labelTwo,"labelThree": labelThree,"labelFour": labelFour,"labelFive": labelFive]
     }
 
     override var prefersStatusBarHidden: Bool {
