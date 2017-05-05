@@ -42,6 +42,11 @@ class ViewController: UITableViewController {
     }
     
     func submit(_ answer: String) {
+        guard answer.characters.count > 2 else {
+            showErrorAlert(title: "Word too short", message: "Your words must be at least 3 characters.")
+            return
+        }
+        
         let answerLowercased = answer.lowercased()
         
         // TODO: Disallow entering start word
