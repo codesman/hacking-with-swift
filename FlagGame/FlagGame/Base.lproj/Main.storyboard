@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -23,6 +24,9 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ugI-Av-NOY">
                                 <rect key="frame" x="87" y="100" width="200" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="ugI-Av-NOY" secondAttribute="height" multiplier="2:1" id="Gvq-qx-1ZS"/>
+                                </constraints>
                                 <state key="normal" image="us"/>
                                 <connections>
                                     <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4uq-UL-B8d"/>
@@ -30,6 +34,9 @@
                             </button>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0tv-kv-tdj">
                                 <rect key="frame" x="87.5" y="230" width="200" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="0tv-kv-tdj" secondAttribute="height" multiplier="2:1" id="WVa-yy-Wqj"/>
+                                </constraints>
                                 <state key="normal" image="us"/>
                                 <connections>
                                     <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="US0-ru-44Q"/>
@@ -37,6 +44,9 @@
                             </button>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="INb-K9-Cfz">
                                 <rect key="frame" x="87.5" y="360" width="200" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="INb-K9-Cfz" secondAttribute="height" multiplier="2:1" id="lWW-yi-Z0D"/>
+                                </constraints>
                                 <state key="normal" image="us"/>
                                 <connections>
                                     <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7gZ-Jo-tbp"/>
@@ -48,7 +58,10 @@
                             <constraint firstItem="ugI-Av-NOY" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="50Z-lp-pgN"/>
                             <constraint firstItem="INb-K9-Cfz" firstAttribute="top" secondItem="0tv-kv-tdj" secondAttribute="bottom" constant="30" id="SIv-hu-qRd"/>
                             <constraint firstItem="0tv-kv-tdj" firstAttribute="centerX" secondItem="INb-K9-Cfz" secondAttribute="centerX" id="Xhv-ta-XBe"/>
+                            <constraint firstItem="INb-K9-Cfz" firstAttribute="height" secondItem="0tv-kv-tdj" secondAttribute="height" id="brz-vi-nSy"/>
                             <constraint firstItem="ugI-Av-NOY" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="36" id="eaa-Bu-w2a"/>
+                            <constraint firstItem="0tv-kv-tdj" firstAttribute="height" secondItem="ugI-Av-NOY" secondAttribute="height" id="hmd-BS-wpx"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" relation="greaterThanOrEqual" secondItem="INb-K9-Cfz" secondAttribute="bottom" constant="20" id="sMZ-Iy-ev3"/>
                             <constraint firstItem="0tv-kv-tdj" firstAttribute="top" secondItem="ugI-Av-NOY" secondAttribute="bottom" constant="30" id="y5j-22-bUN"/>
                             <constraint firstItem="ugI-Av-NOY" firstAttribute="centerX" secondItem="0tv-kv-tdj" secondAttribute="centerX" id="z05-RQ-PhE"/>
                         </constraints>
