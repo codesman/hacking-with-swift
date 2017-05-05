@@ -44,13 +44,37 @@ class ViewController: UITableViewController {
     func submit(_ answer: String) {
         let answerLowercased = answer.lowercased()
         
-        if wordIsPossible(from: answerLowercased)
-            && wordIsOriginal(from: answerLowercased)
+        if wordNotUsed(from: answerLowercased)
+            && wordIsPossible(from: answerLowercased)
             && wordIsReal(from: answerLowercased){
             usedWords.insert(answer, at: 0)
             
             let indexPath = IndexPath(row: 0, section: 0)
             tableView.insertRows(at: [indexPath], with: .automatic)
+        } else {
+            var errorTitle = ""
+            var errorMessage = ""
+            
+            // TODO: Refactor with switch
+            if !wordNotUsed(from: answerLowercased) {
+                errorTitle = "Word used already"
+                errorMessage = "Be more original!"
+                
+            } else if !wordIsPossible(from: answerLowercased) {
+                if let titleLowercased = title?.lowercased() {
+                    errorTitle = "Word not possible"
+                    errorMessage = "You can't spell that word from \(titleLowercased)"
+                }
+            } else if !wordIsReal(from: answerLowercased){
+                errorTitle = "Word not recognized"
+                errorMessage = "You can't just make them up, you know!"
+                
+            }
+            
+            let alert = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            
+            present(alert, animated: true)
         }
     }
     
@@ -66,7 +90,7 @@ class ViewController: UITableViewController {
         return true
     }
     
-    func wordIsOriginal(from word: String) -> Bool {
+    func wordNotUsed(from word: String) -> Bool {
         
         return !usedWords.contains(word)
     }
