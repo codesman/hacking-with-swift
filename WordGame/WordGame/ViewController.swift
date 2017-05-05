@@ -22,11 +22,35 @@ class ViewController: UITableViewController {
         startGame()
     }
     
-    func setupNavigation() {
+    private func setupNavigation() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(promptForAnswer))
     }
     
-    func promptForAnswer() {
+    private func populateWords() {
+        let defaultWords = ["silkworm"]
+        
+        guard let path = Bundle.main.path(forResource: "words", ofType: "txt") else {
+            allWords = defaultWords
+            return
+        }
+        
+        guard let words = try? String(contentsOfFile: path) else {
+            allWords = defaultWords
+            return
+        }
+        
+        allWords = words.components(separatedBy: "\n")
+    }
+    
+    private func startGame() {
+        guard let allWords = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: allWords) as? [String] else { return }
+        
+        title = allWords[0]
+        usedWords.removeAll(keepingCapacity: true)
+        tableView.reloadData()
+    }
+    
+    @objc private func promptForAnswer() {
         let alert = UIAlertController(title: "Enter answer", message: nil, preferredStyle: .alert)
         alert.addTextField()
         
@@ -42,7 +66,7 @@ class ViewController: UITableViewController {
         present(alert, animated: true)
     }
     
-    func submit(_ answer: String) {
+    private func submit(_ answer: String) {
         guard answer.characters.count > 2 else {
             showErrorAlert(title: "Word too short", message: "Your words must be at least 3 characters.")
             return
@@ -76,14 +100,12 @@ class ViewController: UITableViewController {
         }
     }
     
-    func showErrorAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+    private func wordNotUsed(from word: String) -> Bool {
         
-        present(alert, animated: true)
+        return !usedWords.contains(word)
     }
-    
-    func wordIsPossible(from word: String) -> Bool {
+
+    private func wordIsPossible(from word: String) -> Bool {
         guard var tempWord = title?.lowercased() else { return false }
         
         for character in word.characters {
@@ -95,12 +117,7 @@ class ViewController: UITableViewController {
         return true
     }
     
-    func wordNotUsed(from word: String) -> Bool {
-        
-        return !usedWords.contains(word)
-    }
-    
-    func wordIsReal(from word: String) -> Bool {
+    private func wordIsReal(from word: String) -> Bool {
         let checker = UITextChecker()
         let range = NSMakeRange(0, word.utf16.count)
         let misspelled = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
@@ -108,28 +125,11 @@ class ViewController: UITableViewController {
         return misspelled.location == NSNotFound
     }
     
-    func populateWords() {
-        let defaultWords = ["silkworm"]
+    private func showErrorAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
         
-        guard let path = Bundle.main.path(forResource: "words", ofType: "txt") else {
-            allWords = defaultWords
-            return
-        }
-        
-        guard let words = try? String(contentsOfFile: path) else {
-            allWords = defaultWords
-            return
-        }
-        
-        allWords = words.components(separatedBy: "\n")
-    }
-    
-    func startGame() {
-        guard let allWords = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: allWords) as? [String] else { return }
-        
-        title = allWords[0]
-        usedWords.removeAll(keepingCapacity: true)
-        tableView.reloadData()
+        present(alert, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -148,7 +148,5 @@ class ViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
 }
 
