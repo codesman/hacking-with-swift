@@ -42,22 +42,31 @@ class ViewController: UITableViewController {
     }
     
     func submit(_ answer: String) {
+        let answerLowercased = answer.lowercased()
         
+        if wordIsPossible(from: answerLowercased)
+            && wordIsOriginal(from: answerLowercased)
+            && wordIsReal(from: answerLowercased){
+            usedWords.insert(answer, at: 0)
+            
+            let indexPath = IndexPath(row: 0, section: 0)
+            tableView.insertRows(at: [indexPath], with: .automatic)
+        }
     }
     
-    func isWordPossible(_ word: String) -> Bool {
+    func wordIsPossible(from word: String) -> Bool {
         
-        return false
+        return true
     }
     
-    func isWordOriginal(_ word: String) -> Bool {
+    func wordIsOriginal(from word: String) -> Bool {
         
-        return false
+        return true
     }
     
-    func isWordReal(_ word: String) -> Bool {
+    func wordIsReal(from word: String) -> Bool {
         
-        return false
+        return true
     }
     
     func populateWords() {
