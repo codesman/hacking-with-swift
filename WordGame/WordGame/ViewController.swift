@@ -55,18 +55,28 @@ class ViewController: UITableViewController {
     }
     
     func wordIsPossible(from word: String) -> Bool {
+        guard var tempWord = title?.lowercased() else { return false }
+        
+        for character in word.characters {
+            guard let possible = tempWord.range(of: String(character)) else { return false }
+            
+            tempWord.remove(at: possible.lowerBound)
+        }
         
         return true
     }
     
     func wordIsOriginal(from word: String) -> Bool {
         
-        return true
+        return !usedWords.contains(word)
     }
     
     func wordIsReal(from word: String) -> Bool {
+        let checker = UITextChecker()
+        let range = NSMakeRange(0, word.utf16.count)
+        let misspelled = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
         
-        return true
+        return misspelled.location == NSNotFound
     }
     
     func populateWords() {
@@ -85,7 +95,6 @@ class ViewController: UITableViewController {
         title = allWords[0]
         usedWords.removeAll(keepingCapacity: true)
         tableView.reloadData()
-        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
