@@ -45,6 +45,21 @@ class ViewController: UITableViewController {
         
     }
     
+    func isWordPossible(_ word: String) -> Bool {
+        
+        return false
+    }
+    
+    func isWordOriginal(_ word: String) -> Bool {
+        
+        return false
+    }
+    
+    func isWordReal(_ word: String) -> Bool {
+        
+        return false
+    }
+    
     func populateWords() {
         guard let path = Bundle.main.path(forResource: "words", ofType: "txt") else { return }
         guard let words = try? String(contentsOfFile: path) else {
