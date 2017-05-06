@@ -53,7 +53,20 @@ class ViewController: UIViewController {
         
         let metrics = ["labelHeight": 88]
         
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[labelOne(labelHeight@999)]-[labelTwo(labelOne)]-[labelThree(labelOne)]-[labelFour(labelOne)]-[labelFive(labelOne)]-(>=10)-|", options: [], metrics: metrics, views: views))
+        var previous: UILabel!
+        
+//        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[labelOne(labelHeight@999)]-[labelTwo(labelOne)]-[labelThree(labelOne)]-[labelFour(labelOne)]-[labelFive(labelOne)]-(>=10)-|", options: [], metrics: metrics, views: views))
+        
+        for label in [labelOne, labelTwo, labelThree, labelFour, labelFive] {
+            label.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+            label.heightAnchor.constraint(equalToConstant: 88).isActive = true
+            
+            if previous != nil {
+                label.topAnchor.constraint(equalTo: previous.bottomAnchor).isActive = true
+            }
+            
+            previous = label
+        }
     }
 
     override var prefersStatusBarHidden: Bool {
