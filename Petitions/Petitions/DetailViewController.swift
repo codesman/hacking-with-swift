@@ -32,11 +32,13 @@ class DetailViewController: UIViewController {
     
     private func setDetailBody() {
         guard detailItem != nil else { return }
+        guard let title = detailItem["title"] else { return }
         guard let body = detailItem["body"] else { return }
+        guard let signatures = detailItem["signatureCount"] else { return }
         
         var html = "<html><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
-        html += "<style>body { font-size: 150%; }</style>"
-        html += "</head><body>" + body + "</body></html>"
+        html += "<style>body { font-size: 100%; }</style>"
+        html += "</head><body><h1>\(title)</h1><h2>Signatures: \(signatures)</h2>\(body)</body></html>"
         
         webView.loadHTMLString(html, baseURL: nil)
     }
