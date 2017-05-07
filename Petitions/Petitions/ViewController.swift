@@ -18,16 +18,29 @@ class ViewController: UITableViewController {
         
         getData()
     }
+    
+    func urlString() -> String {
+        guard let tag = navigationController?.tabBarItem.tag else { return "" }
+        
+        switch tag {
+        case 1:
+            return "https://api.whitehouse.gov/v1/petitions.json?signatureCountFloor=10000&limit=100"
+        default:
+            return "https://api.whitehouse.gov/v1/petitions.json?limit=100"
+        }
+    }
 
     private func getData(){
-        guard let url = URL(string: "https://api.whitehouse.gov/v1/petitions.json?limit=100" ) else { return }
+        let urlString = self.urlString()
+        
+        guard let url = URL(string: urlString ) else { return }
         guard let data = try? Data(contentsOf: url) else { return }
         
         parse(json: JSON(data: data))
     }
     
     private func parse(json: JSON) {
-        guard json["metadata"]["responseInfo"]["status"].intValue == 200 else { return }
+        guard json["metadata"]["responseInfo"]["status"].intValue == 200 else { showError(); return }
         
         for result in json["results"].arrayValue {
             let title = result["title"].stringValue
@@ -39,6 +52,13 @@ class ViewController: UITableViewController {
         }
         
         tableView.reloadData()
+    }
+    
+    func showError() {
+        let alert = UIAlertController(title: "Loading Error", message: "There was a problem loading the feed. Please check your connection and try again.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        
+        present(alert, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

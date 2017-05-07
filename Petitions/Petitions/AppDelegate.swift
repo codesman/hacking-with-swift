@@ -13,16 +13,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        setUpTabBar()
+        addTopRated()
         
         return true
     }
     
-    func setUpTabBar() {
+    func addTopRated() {
         guard let tabBarController = window?.rootViewController as? UITabBarController else { return }
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "NavController")
