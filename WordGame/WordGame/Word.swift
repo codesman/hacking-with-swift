@@ -13,18 +13,33 @@ enum Word {
     case notPossible(String)
     case notReal
     
-    func error() -> [String: String] {
+    var title: String {
         switch self {
         case .tooShort:
-            return ["title": "Word too short", "message": "Your words must be at least 3 characters."]
+            return "Word too short"
         case .isStartWord:
-            return ["title": "Start word entered", "message": "The start word doesn't count as a word!"]
+            return "Start word entered"
         case .wasUsed:
-            return ["title": "Word used already", "message": "Be more original!"]
-        case .notPossible(let titleLowercased):
-            return ["title": "Word not possible", "message": "You can't spell that word from \(titleLowercased)"]
+            return "Word used already"
+        case .notPossible:
+            return "Word not possible"
         case .notReal:
-            return ["title": "Word not recognized", "message": "You can't just make them up, you know!"]
+            return "Word not recognized"
+        }
+    }
+        
+    var message: String {
+        switch self {
+        case .tooShort:
+            return "Your words must be at least 3 characters."
+        case .isStartWord:
+            return "The start word doesn't count as a word!"
+        case .wasUsed:
+            return "Be more original!"
+        case .notPossible(let titleLowercased):
+            return "You can't spell that word from \(titleLowercased)"
+        case .notReal:
+            return "You can't just make them up, you know!"
         }
     }
 }
