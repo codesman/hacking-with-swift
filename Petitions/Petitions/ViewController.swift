@@ -10,8 +10,8 @@ import UIKit
 
 class ViewController: UITableViewController {
     
-    lazy var petitions = [String]()
-
+    lazy var petitions = [[String: String]]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
