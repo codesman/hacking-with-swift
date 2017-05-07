@@ -16,17 +16,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        addTopRated()
-        
+        addTabBarItem(.topRated, tag: 1)
+        addTabBarItem(.featured, tag: 2) // Items with "trump" in the title
+
         return true
     }
     
-    func addTopRated() {
+    func addTabBarItem(_ item: UITabBarSystemItem, tag: Int) {
         guard let tabBarController = window?.rootViewController as? UITabBarController else { return }
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "NavController")
         
-        viewController.tabBarItem = UITabBarItem(tabBarSystemItem: .topRated, tag: 1)
+        viewController.tabBarItem = UITabBarItem(tabBarSystemItem: item, tag: tag)
         tabBarController.viewControllers?.append(viewController)
     }
     

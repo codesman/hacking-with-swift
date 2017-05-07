@@ -27,6 +27,8 @@ class ViewController: UITableViewController {
         switch tag {
         case 1:
             return "https://api.whitehouse.gov/v1/petitions.json?signatureCountFloor=10000&limit=100"
+        case 2:
+            return "https://api.whitehouse.gov/v1/petitions.json?title=trump&limit=100"
         default:
             return "https://api.whitehouse.gov/v1/petitions.json?limit=100"
         }
