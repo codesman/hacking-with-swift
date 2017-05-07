@@ -68,12 +68,12 @@ class ViewController: UITableViewController {
     
     private func submit(_ answer: String) {
         guard answer.characters.count > 2 else {
-            showErrorAlert(title: Word.tooShort.error()["title"]!, message: Word.tooShort.error()["message"]!)
+            showErrorAlert(title: Word.tooShort.title, message: Word.tooShort.message)
             return
         }
         
         guard let titleLowercased = title?.lowercased(), answer != titleLowercased else {
-            showErrorAlert(title: Word.isStartWord.error()["title"]!, message: Word.isStartWord.error()["message"]!)
+            showErrorAlert(title: Word.isStartWord.title, message: Word.isStartWord.message)
             return
         }
         
@@ -89,13 +89,13 @@ class ViewController: UITableViewController {
         } else {
             // TODO: Refactor with switch
             if !wordNotUsed(from: answerLowercased) {
-                showErrorAlert(title: Word.wasUsed.error()["title"]!, message: Word.wasUsed.error()["message"]!)
+                showErrorAlert(title: Word.wasUsed.title, message: Word.wasUsed.message)
                 
             } else if !wordIsPossible(from: answerLowercased) {
-                showErrorAlert(title: Word.notPossible(answerLowercased).error()["title"]!, message: Word.notPossible(answerLowercased).error()["message"]!)
+                showErrorAlert(title: Word.notPossible(answerLowercased).title, message: Word.notPossible(answerLowercased).message)
                 
             } else if !wordIsReal(from: answerLowercased){
-                showErrorAlert(title: Word.notReal.error()["title"]!, message: Word.notReal.error()["message"]!)
+                showErrorAlert(title: Word.notReal.title, message: Word.notReal.message)
             }
         }
     }
