@@ -15,8 +15,33 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        getData()
     }
 
+    private func getData(){
+        guard let url = URL(string: "https://api.whitehous.gov/v1/petitions.json?limit=100" ) else { return }
+        guard let data = try? Data(contentsOf: url) else { return }
+        
+        parse(json: JSON(data: data))
+    }
+    
+    private func parse(json: JSON) {
+        guard json["metadata"]["responseInfo"]["status"].intValue == 200 else { return }
+        
+        for result in json["results"].arrayValue {
+            let title = result["title"].stringValue
+            let body = result["body"].stringValue
+            let signatureCount = result["signatureCount"].stringValue
+            let petition = ["title": title, "body": body, "signatureCount": signatureCount]
+            
+            petitions.append(petition)
+        }
+        
+        tableView.reloadData()
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
