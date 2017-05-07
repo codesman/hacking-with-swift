@@ -20,7 +20,7 @@ class ViewController: UITableViewController {
     }
 
     private func getData(){
-        guard let url = URL(string: "https://api.whitehous.gov/v1/petitions.json?limit=100" ) else { return }
+        guard let url = URL(string: "https://api.whitehouse.gov/v1/petitions.json?limit=100" ) else { return }
         guard let data = try? Data(contentsOf: url) else { return }
         
         parse(json: JSON(data: data))
@@ -53,9 +53,10 @@ class ViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let petition = petitions[indexPath.row]
         
-        cell.textLabel?.text = "Title Goes Here"
-        cell.detailTextLabel?.text = "Subtitle Goes Here"
+        cell.textLabel?.text = petition["title"]
+        cell.detailTextLabel?.text = petition["body"]
         
         return cell
     }
