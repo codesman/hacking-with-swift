@@ -186,6 +186,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <state key="normal" title="Clear"/>
+                                <connections>
+                                    <action selector="clearTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Ch-sb-xMe"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zDd-cd-Mdv">
                                 <rect key="frame" x="425" y="390" width="75" height="44"/>
@@ -229,7 +232,6 @@
                     </view>
                     <connections>
                         <outlet property="answersLabel" destination="2O8-xq-TB0" id="Ggl-di-c12"/>
-                        <outlet property="clearTapped" destination="WeA-cq-yDF" id="DgZ-KQ-Ohp"/>
                         <outlet property="cluesLabel" destination="0D7-jd-nmV" id="nTC-NZ-XF0"/>
                         <outlet property="currentAnswer" destination="f6J-AG-kPC" id="fwU-ly-xWo"/>
                         <outlet property="scoreLabel" destination="u1R-ZY-rpQ" id="1sa-TE-4mq"/>
