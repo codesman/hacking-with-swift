@@ -77,8 +77,12 @@ class ViewController: UIViewController {
         }
     }
     
-    func letterTapped(){
+    func letterTapped(button: UIButton){
+        guard let label = button.titleLabel?.text else { return }
         
+        currentAnswer.text = currentAnswer?.text ?? "" + label
+        activatedButtons.append(button)
+        button.isHidden = true
     }
     
     @IBAction func clearTapped(_ sender: Any) {
