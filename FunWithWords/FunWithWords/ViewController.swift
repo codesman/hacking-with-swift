@@ -85,10 +85,46 @@ class ViewController: UIViewController {
         button.isHidden = true
     }
     
+    func levelUp(){
+        level += 1
+        solutions.removeAll(keepingCapacity: true)
+        loadLevel()
+        
+        for button in letterButtons {
+            button.isHidden = false
+        }
+    }
+    
     @IBAction func clearTapped(_ sender: Any) {
+        currentAnswer.text = ""
+        
+        for button in activatedButtons {
+            button.isHidden = false
+        }
+        
+        activatedButtons.removeAll()
     }
     
     @IBAction func submitTapped(_ sender: Any) {
+        if let solutionPosition = solutions.index(of: currentAnswer.text ?? "") {
+            activatedButtons.removeAll()
+            var splitClues = answersLabel.text!.components(separatedBy: "\n")
+            splitClues[solutionPosition] = currentAnswer.text ?? ""
+            
+            answersLabel.text = splitClues.joined(separator: "\n")
+            
+            currentAnswer.text = ""
+            score += 1
+            
+            if score % 7 == 0 {
+                let alert = UIAlertController(title: "Well Done!", message: "Are you ready for the next level?", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Let's go", style: .default))
+                
+                present(alert, animated: true)
+            }
+            
+        }
     }
 
     override func didReceiveMemoryWarning() {
