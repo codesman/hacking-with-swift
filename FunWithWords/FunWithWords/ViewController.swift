@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GameplayKit
 
 class ViewController: UIViewController {
 
@@ -26,7 +27,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         setupButtons()
-        
+        loadLevel()
     }
     
     func setupButtons(){
@@ -38,15 +39,42 @@ class ViewController: UIViewController {
         }
     }
     
+    func loadLevel() {
+        guard let path = Bundle.main.path(forResource: "level\(level)", ofType: "txt") else { return }
+        guard let levelContents = try? String(contentsOfFile: path) else { return }
+        let lines = levelContents.components(separatedBy: "\n")
+        
+        guard let shuffledLines = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: lines) as? [String] else { return }
+        
+        var clueString = ""
+        var solutionString = ""
+        var letterBits = [String]()
+        
+        for (index, line) in shuffledLines.enumerated() {
+            let parts = line.components(separatedBy: ": ")
+            let answer = parts[0]
+            let clue = parts[1]
+            
+            clueString += "\(index + 1), \(clue)\n"
+            
+            let solutionWord = answer.replacingOccurrences(of: "|", with: "")
+            solutionString += "\(solutionWord.characters.count) letters\n"
+            solutions.append(solutionWord)
+            
+            let bits = answer.components(separatedBy: "|")
+            letterBits += bits
+        }
+    }
+    
     func letterTapped(){
         
     }
+    
     @IBAction func clearTapped(_ sender: Any) {
     }
     
     @IBAction func submitTapped(_ sender: Any) {
     }
-
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
