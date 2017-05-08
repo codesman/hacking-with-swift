@@ -192,6 +192,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <state key="normal" title="Submit"/>
+                                <connections>
+                                    <action selector="submitTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nfA-4D-tgk"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Tap letters to guess" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f6J-AG-kPC">
                                 <rect key="frame" x="247" y="315" width="530" height="80"/>
@@ -224,6 +227,13 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <connections>
+                        <outlet property="answersLabel" destination="2O8-xq-TB0" id="Ggl-di-c12"/>
+                        <outlet property="clearTapped" destination="WeA-cq-yDF" id="DgZ-KQ-Ohp"/>
+                        <outlet property="cluesLabel" destination="0D7-jd-nmV" id="nTC-NZ-XF0"/>
+                        <outlet property="currentAnswer" destination="f6J-AG-kPC" id="fwU-ly-xWo"/>
+                        <outlet property="scoreLabel" destination="u1R-ZY-rpQ" id="1sa-TE-4mq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
