@@ -18,7 +18,18 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        getData()
+        performSelector(inBackground: #selector(fetchJSON), with: nil)
+        
+        //        getData()
+    }
+    
+    func fetchJSON(){
+        let urlString = self.urlString()
+        
+        guard let url = URL(string: urlString ) else { return }
+        guard let data = try? Data(contentsOf: url) else { return }
+        
+        self.parse(json: JSON(data: data))
     }
     
     func urlString() -> String {
@@ -33,18 +44,12 @@ class ViewController: UITableViewController {
             return "https://api.whitehouse.gov/v1/petitions.json?limit=100"
         }
     }
-
-    private func getData(){
-        let urlString = self.urlString()
-        
-        guard let url = URL(string: urlString ) else { return }
-        guard let data = try? Data(contentsOf: url) else { return }
-        
-        parse(json: JSON(data: data))
-    }
     
     private func parse(json: JSON) {
-        guard json["metadata"]["responseInfo"]["status"].intValue == 200 else { showError(); return }
+        guard json["metadata"]["responseInfo"]["status"].intValue == 200 else {
+            performSelector(onMainThread: #selector(showError), with: nil, waitUntilDone: false)
+            return
+        }
         
         for result in json["results"].arrayValue {
             let title = result["title"].stringValue
@@ -55,7 +60,7 @@ class ViewController: UITableViewController {
             petitions.append(petition)
         }
         
-        tableView.reloadData()
+        tableView.performSelector(onMainThread: #selector(UITableView.reloadData), with: nil, waitUntilDone: false)
     }
     
     func showError() {
@@ -76,7 +81,7 @@ class ViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return petitions.count
     }
