@@ -19,7 +19,11 @@ class ViewController: UIViewController {
     var letterButtons = [UIButton]()
     var activatedButtons = [UIButton]()
     var solutions = [String]()
-    var score = 0
+    var score: Int = 0 {
+        didSet {
+            scoreLabel.text = "Score: \(score)"
+        }
+    }
     var level = 1
     
     override func viewDidLoad() {
@@ -80,7 +84,7 @@ class ViewController: UIViewController {
     func letterTapped(button: UIButton){
         guard let label = button.titleLabel?.text else { return }
         
-        currentAnswer.text = currentAnswer?.text ?? "" + label
+        currentAnswer.text = currentAnswer!.text! + label
         activatedButtons.append(button)
         button.isHidden = true
     }
