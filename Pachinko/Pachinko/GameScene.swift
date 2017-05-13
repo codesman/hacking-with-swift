@@ -17,6 +17,7 @@ class GameScene: SKScene {
         
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         
+        addSlots()
         addBouncers()
     }
     
@@ -32,6 +33,32 @@ class GameScene: SKScene {
             
             addChild(ball)
         }
+    }
+    
+    func makeSlot(at position: CGPoint, isGood: Bool) {
+        
+        var slotBase: SKSpriteNode
+        
+        switch isGood {
+            
+            case true:
+                slotBase = SKSpriteNode(imageNamed: "slotBaseGood")
+            
+            case false:
+                slotBase = SKSpriteNode(imageNamed: "slotBaseBad")
+        }
+        
+        slotBase.position = position
+        
+        addChild(slotBase)
+    }
+    
+    func addSlots() {
+        
+        makeSlot(at: CGPoint(x: 128, y: 0), isGood: true)
+        makeSlot(at: CGPoint(x: 384, y: 0), isGood: false)
+        makeSlot(at: CGPoint(x: 640, y: 0), isGood: true)
+        makeSlot(at: CGPoint(x: 896, y: 0), isGood: false)
     }
     
     func makeBouncer(at position: CGPoint) {
