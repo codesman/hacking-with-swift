@@ -73,6 +73,22 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let person = people[indexPath.item]
+        let alert = UIAlertController(title: "Rename Person", message: nil, preferredStyle: .alert)
+        
+        alert.addTextField()
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "OK", style: .default) { [unowned self, alert] _ in
+            guard let newName = alert.textFields?[0] else { return }
+            person.name = newName.text ?? ""
+            
+            self.collectionView?.reloadData()
+        })
+        
+        present(alert, animated: true)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
