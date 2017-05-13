@@ -84,9 +84,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         case "good":
             destroy(ball: ball)
+            score += 1
             
         case "bad":
             destroy(ball: ball)
+            score -= 1
             
         default:
             return
