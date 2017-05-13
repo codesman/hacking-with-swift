@@ -11,7 +11,6 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    // TODO: Choose ball color rendomly
     // TODO: Remove boxes after 5 balls
     // TODO: Collision with small boxes adds a ball to stash
     // TODO: Click to remove box in edit mode
@@ -101,7 +100,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func makeBall(at location: CGPoint) {
         
-        let ball = SKSpriteNode(imageNamed: "ballRed")
+        let colorInt = GKRandomDistribution(lowestValue: 1, highestValue: BallColor.allValues.count).nextInt()
+        let color = BallColor(rawValue: colorInt)
+        let imageName = "ball\(color?.capitalized ?? "")"
+        let ball = SKSpriteNode(imageNamed: imageName)
         
         ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
         ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask

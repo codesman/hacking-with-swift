@@ -9,7 +9,7 @@
 import Foundation
 
 enum BallColor: Int {
-    case blue, cyan, green, grey, purple, red, yellow
+    case blue = 1, cyan, green, grey, purple, red, yellow
 }
 
 extension BallColor: CustomStringConvertible {
@@ -30,6 +30,25 @@ extension BallColor: CustomStringConvertible {
             return "red"
         case .yellow:
             return "yellow"
+        }
+    }
+    
+    var capitalized: String {
+        switch self {
+        case .blue:
+            return "Blue"
+        case .cyan:
+            return "Cyan"
+        case .green:
+            return "Green"
+        case .grey:
+            return "Grey"
+        case .purple:
+            return "Purple"
+        case .red:
+            return "Red"
+        case .yellow:
+            return "Yellow"
         }
     }
     
