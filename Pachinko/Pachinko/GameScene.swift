@@ -78,7 +78,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case false:
             makeBall(at: location)
         }
-
+        
     }
     
     func makeBox(at location: CGPoint) {
@@ -95,7 +95,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func makeBall(at location: CGPoint) {
-
+        
         let ball = SKSpriteNode(imageNamed: "ballRed")
         
         ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
@@ -137,7 +137,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         addChild(scoreLabel)
     }
-
+    
     func didBegin(_ contact: SKPhysicsContact) {
         
         guard let nodeA = contact.bodyA.node else { return }
@@ -173,6 +173,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func destroy(ball: SKNode) {
+        
         ball.removeFromParent()
     }
     
