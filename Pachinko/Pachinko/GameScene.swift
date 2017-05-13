@@ -10,15 +10,38 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    var scoreLabel: SKLabelNode!
+    var score: Int = 0 {
+        
+        didSet {
+            scoreLabel.text = "Score: \(score)"
+        }
+    }
+    
     override func didMove(to view: SKView) {
         
         setBackground()
-        
-        physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
-        physicsWorld.contactDelegate = self
+        setScoreLabel()
+        setPhysics()
         
         addSlots()
         addBouncers()
+    }
+    
+    func setPhysics() {
+        
+        physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+        physicsWorld.contactDelegate = self
+    }
+    
+    func setScoreLabel() {
+        
+        scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+        scoreLabel.text = "Score: 0"
+        scoreLabel.horizontalAlignmentMode = .right
+        scoreLabel.position = CGPoint(x: 980, y: 700)
+        
+        addChild(scoreLabel)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
