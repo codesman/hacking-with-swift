@@ -47,20 +47,51 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        if let touch = touches.first {
+        onFirstTouch(handle: touches)
+    }
+    
+    func onFirstTouch(handle touches: Set<UITouch>) {
+        
+        guard let touch = touches.first else { return }
+        
+        let location = touch.location(in: self)
+        let objects = nodes(at: location)
+        
+        switch objects.contains(editLabel) {
             
-            let location = touch.location(in: self)
-            let objects = nodes(at: location)
+        case true:
+            editMode = !editMode
             
-            switch objects.contains(editLabel) {
-                
-            case true:
-                editMode = !editMode
-                
-            case false:
-                makeBall(at: location)
-            }
+        case false:
+            makeItem(at: location)
         }
+    }
+    
+    func makeItem(at location: CGPoint){
+        
+        switch editMode {
+            
+        case true:
+            makeBox(at: location)
+            
+        case false:
+            makeBall(at: location)
+        }
+
+    }
+    
+    func makeBox(at location: CGPoint) {
+        
+        let ball = SKSpriteNode(imageNamed: "ballRed")
+        
+        ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
+        ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask
+        ball.physicsBody!.restitution = 0.4
+        ball.position = location
+        ball.zPosition = 101
+        ball.name = "ball"
+        
+        addChild(ball)
     }
     
     func makeBall(at location: CGPoint) {
