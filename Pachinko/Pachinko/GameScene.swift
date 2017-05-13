@@ -11,6 +11,11 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    // TODO: Choose ball color rendomly
+    // TODO: Remove boxes after 5 balls
+    // TODO: Collision with small boxes adds a ball to stash
+    // TODO: Click to remove box in edit mode
+    
     var scoreLabel: SKLabelNode!
     var score: Int = 0 {
         
