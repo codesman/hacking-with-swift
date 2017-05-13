@@ -31,10 +31,47 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask
             ball.physicsBody!.restitution = 0.4
             ball.position = location
+            ball.zPosition = 101
             ball.name = "ball"
             
             addChild(ball)
         }
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        
+        guard let nodeA = contact.bodyA.node else { return }
+        guard let nodeB = contact.bodyB.node else { return }
+        
+        if nodeA.name == "ball" {
+            
+            colisionBetween(ball: nodeA, object: nodeB)
+            
+        } else if nodeB.name == "ball" {
+            
+            colisionBetween(ball: nodeB, object: nodeA)
+        }
+    }
+    
+    func colisionBetween(ball: SKNode, object: SKNode) {
+        
+        guard let name = object.name else { return }
+        
+        switch name {
+            
+        case "good":
+            destroy(ball: ball)
+            
+        case "bad":
+            destroy(ball: ball)
+            
+        default:
+            return
+        }
+    }
+    
+    func destroy(ball: SKNode) {
+        ball.removeFromParent()
     }
     
     func makeSlot(at position: CGPoint, isGood: Bool) {
@@ -46,15 +83,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         switch isGood {
             
-            case true:
-                slotBase = SKSpriteNode(imageNamed: "slotBaseGood")
-                slotGlow = SKSpriteNode(imageNamed: "slotGlowGood")
-                slotBase.name = "good"
+        case true:
+            slotBase = SKSpriteNode(imageNamed: "slotBaseGood")
+            slotGlow = SKSpriteNode(imageNamed: "slotGlowGood")
+            slotBase.name = "good"
             
-            case false:
-                slotBase = SKSpriteNode(imageNamed: "slotBaseBad")
-                slotGlow = SKSpriteNode(imageNamed: "slotGlowBad")
-                slotBase.name = "bad"
+        case false:
+            slotBase = SKSpriteNode(imageNamed: "slotBaseBad")
+            slotGlow = SKSpriteNode(imageNamed: "slotGlowBad")
+            slotBase.name = "bad"
         }
         
         slotBase.position = position
