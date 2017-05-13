@@ -37,6 +37,8 @@ class GameScene: SKScene {
     
     func makeSlot(at position: CGPoint, isGood: Bool) {
         
+        let spin = SKAction.rotate(byAngle: CGFloat.pi, duration: 10)
+        let spinForever = SKAction.repeatForever(spin)
         var slotBase: SKSpriteNode
         var slotGlow: SKSpriteNode
         
@@ -56,6 +58,8 @@ class GameScene: SKScene {
         
         addChild(slotBase)
         addChild(slotGlow)
+        
+        slotGlow.run(spinForever)
     }
     
     func addSlots() {
@@ -72,6 +76,7 @@ class GameScene: SKScene {
         bouncer.position = position
         bouncer.physicsBody = SKPhysicsBody(circleOfRadius: bouncer.size.width / 2.0)
         bouncer.physicsBody!.isDynamic = false
+        bouncer.zPosition = 100
         
         addChild(bouncer)
     }
