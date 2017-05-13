@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -82,16 +83,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func makeBox(at location: CGPoint) {
         
-        let ball = SKSpriteNode(imageNamed: "ballRed")
+        let size = CGSize(width: GKRandomDistribution(lowestValue: 16, highestValue: 128).nextInt(), height: 16)
+        let box = SKSpriteNode(color: RandomColor(), size: size)
         
-        ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
-        ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask
-        ball.physicsBody!.restitution = 0.4
-        ball.position = location
-        ball.zPosition = 101
-        ball.name = "ball"
+        box.zRotation = RandomCGFloat(min: 0, max: 3)
+        box.position = location
+        box.physicsBody = SKPhysicsBody(rectangleOf: box.size)
+        box.physicsBody!.isDynamic = false
         
-        addChild(ball)
+        addChild(box)
     }
     
     func makeBall(at location: CGPoint) {
