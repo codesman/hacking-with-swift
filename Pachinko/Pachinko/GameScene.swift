@@ -18,6 +18,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    var editLabel: SKLabelNode!
+    var editMode: Bool = false {
+        
+        didSet {
+            
+            switch editMode {
+                
+            case true:
+                editLabel.text = "Done"
+                
+            case false:
+                editLabel.text = "Edit"
+            }
+        }
+    }
+    
     override func didMove(to view: SKView) {
         
         setBackground()
