@@ -38,10 +38,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         setBackground()
         setScoreLabel()
+        setEditLabel()
         setPhysics()
         
         addSlots()
         addBouncers()
+    }
+    
+    func setEditLabel() {
+    
+        editLabel = SKLabelNode(fontNamed: "Chalkduster")
+        editLabel.text = "Edit"
+        editLabel.position = CGPoint(x: 80, y: 700)
+        
+        addChild(editLabel)
     }
     
     func setPhysics() {
