@@ -95,17 +95,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func makeBall(at location: CGPoint) {
-        
+
         let ball = SKSpriteNode(imageNamed: "ballRed")
         
         ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
         ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask
         ball.physicsBody!.restitution = 0.4
-        ball.position = location
+        ball.position = constrainY(of: location)
         ball.zPosition = 101
         ball.name = "ball"
         
         addChild(ball)
+    }
+    
+    func constrainY(of location: CGPoint) -> CGPoint{
+        
+        return CGPoint(x: location.x, y: 720)
     }
     
     func setEditLabel() {
