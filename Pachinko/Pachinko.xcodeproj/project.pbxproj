@@ -43,6 +43,7 @@
 		9CFCA67C1EC75862005B8D20 /* slotGlowGood@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CFCA6601EC75862005B8D20 /* slotGlowGood@2x.png */; };
 		9CFCA67D1EC75862005B8D20 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CFCA6611EC75862005B8D20 /* spark.png */; };
 		9CFCA67F1EC775BE005B8D20 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCA67E1EC775BE005B8D20 /* Helper.swift */; };
+		9CFCA6811EC780F8005B8D20 /* BallColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCA6801EC780F8005B8D20 /* BallColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +85,7 @@
 		9CFCA6601EC75862005B8D20 /* slotGlowGood@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slotGlowGood@2x.png"; sourceTree = "<group>"; };
 		9CFCA6611EC75862005B8D20 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		9CFCA67E1EC775BE005B8D20 /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		9CFCA6801EC780F8005B8D20 /* BallColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BallColor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 				9CFCA62F1EC755EB005B8D20 /* GameScene.sks */,
 				9CFCA6331EC755EB005B8D20 /* GameScene.swift */,
 				9CFCA6351EC755EB005B8D20 /* GameViewController.swift */,
+				9CFCA6801EC780F8005B8D20 /* BallColor.swift */,
 				9CFCA67E1EC775BE005B8D20 /* Helper.swift */,
 				9CFCA6371EC755EB005B8D20 /* Main.storyboard */,
 				9CFCA63A1EC755EB005B8D20 /* Assets.xcassets */,
@@ -268,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CFCA6341EC755EB005B8D20 /* GameScene.swift in Sources */,
+				9CFCA6811EC780F8005B8D20 /* BallColor.swift in Sources */,
 				9CFCA6361EC755EB005B8D20 /* GameViewController.swift in Sources */,
 				9CFCA62E1EC755EB005B8D20 /* AppDelegate.swift in Sources */,
 				9CFCA67F1EC775BE005B8D20 /* Helper.swift in Sources */,
