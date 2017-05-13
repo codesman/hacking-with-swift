@@ -44,6 +44,7 @@
                                         </label>
                                     </subviews>
                                 </view>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="imageView" destination="Hzc-kf-ub8" id="Xaq-qg-LBT"/>
                                     <outlet property="name" destination="KFl-pg-VWg" id="O3H-2E-Hda"/>
