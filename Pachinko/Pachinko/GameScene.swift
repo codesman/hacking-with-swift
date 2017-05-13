@@ -7,7 +7,6 @@
 //
 
 import SpriteKit
-import GameplayKit
 
 class GameScene: SKScene {
     
@@ -30,6 +29,7 @@ class GameScene: SKScene {
             ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
             ball.physicsBody!.restitution = 0.4
             ball.position = location
+            ball.name = "ball"
             
             addChild(ball)
         }
@@ -47,13 +47,18 @@ class GameScene: SKScene {
             case true:
                 slotBase = SKSpriteNode(imageNamed: "slotBaseGood")
                 slotGlow = SKSpriteNode(imageNamed: "slotGlowGood")
+                slotBase.name = "good"
             
             case false:
                 slotBase = SKSpriteNode(imageNamed: "slotBaseBad")
                 slotGlow = SKSpriteNode(imageNamed: "slotGlowBad")
+                slotBase.name = "bad"
         }
         
         slotBase.position = position
+        slotBase.physicsBody = SKPhysicsBody(rectangleOf: slotBase.size)
+        slotBase.physicsBody!.isDynamic = false
+        
         slotGlow.position = position
         
         addChild(slotBase)
