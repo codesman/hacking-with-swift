@@ -102,7 +102,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let colorInt = GKRandomDistribution(lowestValue: 1, highestValue: BallColor.allValues.count).nextInt()
         let color = BallColor(rawValue: colorInt)
-        let imageName = "ball\(color?.capitalized ?? "")"
+        let imageName = "ball\(color?.description.capitalized ?? "")"
         let ball = SKSpriteNode(imageNamed: imageName)
         
         ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)

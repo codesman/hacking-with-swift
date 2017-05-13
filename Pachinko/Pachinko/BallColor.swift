@@ -33,26 +33,10 @@ extension BallColor: CustomStringConvertible {
         }
     }
     
-    var capitalized: String {
-        switch self {
-        case .blue:
-            return "Blue"
-        case .cyan:
-            return "Cyan"
-        case .green:
-            return "Green"
-        case .grey:
-            return "Grey"
-        case .purple:
-            return "Purple"
-        case .red:
-            return "Red"
-        case .yellow:
-            return "Yellow"
-        }
-    }
-    
     static let allValues = (BallColor.blue.rawValue...BallColor.yellow.rawValue).map {
         BallColor(rawValue: $0)
     }
 }
+
+
+
