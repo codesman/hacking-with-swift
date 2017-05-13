@@ -45,8 +45,40 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addBouncers()
     }
     
-    func setEditLabel() {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        if let touch = touches.first {
+            
+            let location = touch.location(in: self)
+            let objects = nodes(at: location)
+            
+            switch objects.contains(editLabel) {
+                
+            case true:
+                editMode = !editMode
+                
+            case false:
+                makeBall(at: location)
+            }
+        }
+    }
     
+    func makeBall(at location: CGPoint) {
+        
+        let ball = SKSpriteNode(imageNamed: "ballRed")
+        
+        ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
+        ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask
+        ball.physicsBody!.restitution = 0.4
+        ball.position = location
+        ball.zPosition = 101
+        ball.name = "ball"
+        
+        addChild(ball)
+    }
+    
+    func setEditLabel() {
+        
         editLabel = SKLabelNode(fontNamed: "Chalkduster")
         editLabel.text = "Edit"
         editLabel.position = CGPoint(x: 80, y: 700)
@@ -69,24 +101,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         addChild(scoreLabel)
     }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        if let touch = touches.first {
-            
-            let location = touch.location(in: self)
-            let ball = SKSpriteNode(imageNamed: "ballRed")
-            ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
-            ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask
-            ball.physicsBody!.restitution = 0.4
-            ball.position = location
-            ball.zPosition = 101
-            ball.name = "ball"
-            
-            addChild(ball)
-        }
-    }
-    
+
     func didBegin(_ contact: SKPhysicsContact) {
         
         guard let nodeA = contact.bodyA.node else { return }
