@@ -15,6 +15,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // TODO: Collision with small boxes adds a ball to stash
     // TODO: Click to remove box in edit mode
     
+    var ballsLabel: SKLabelNode!
+    var balls: Int = 5 {
+        
+        didSet {
+            ballsLabel.text = "Balls: \(balls)"
+        }
+    }
+    
     var scoreLabel: SKLabelNode!
     var score: Int = 0 {
         
@@ -43,6 +51,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         setBackground()
         setScoreLabel()
+        setBallsLabel()
         setEditLabel()
         setPhysics()
         
@@ -81,6 +90,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         case false:
             makeBall(at: location)
+            balls -= 1
         }
         
     }
@@ -145,6 +155,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(scoreLabel)
     }
     
+    func setBallsLabel() {
+        
+        ballsLabel = SKLabelNode(fontNamed: "Chalkduster")
+        ballsLabel.text = "Balls: \(self.balls)"
+        ballsLabel.horizontalAlignmentMode = .right
+        ballsLabel.position = CGPoint(x: 780, y: 700)
+        
+        addChild(ballsLabel)
+    }
+    
     func didBegin(_ contact: SKPhysicsContact) {
         
         guard let nodeA = contact.bodyA.node else { return }
@@ -152,15 +172,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if nodeA.name == "ball" {
             
-            colisionBetween(ball: nodeA, object: nodeB)
+            collisionBetween(ball: nodeA, object: nodeB)
             
         } else if nodeB.name == "ball" {
             
-            colisionBetween(ball: nodeB, object: nodeA)
+            collisionBetween(ball: nodeB, object: nodeA)
         }
     }
     
-    func colisionBetween(ball: SKNode, object: SKNode) {
+    func collisionBetween(ball: SKNode, object: SKNode) {
         
         guard let name = object.name else { return }
         
@@ -169,6 +189,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case "good":
             destroy(ball: ball)
             score += 1
+            balls += 1
             
         case "bad":
             destroy(ball: ball)
