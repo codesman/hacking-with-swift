@@ -16,6 +16,25 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         super.viewDidLoad()
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPerson))
+        
+        loadPeople()
+    }
+    
+    func loadPeople() {
+        
+        let defaults = UserDefaults.standard
+        
+        guard let savedPeople = defaults.object(forKey: "people") as? Data else { return }
+
+        people = NSKeyedUnarchiver.unarchiveObject(with: savedPeople) as? [Person] ?? [Person]()
+    }
+    
+    func savePeople(){
+        
+        let defaults = UserDefaults.standard
+        let savedData = NSKeyedArchiver.archivedData(withRootObject: people)
+        
+        defaults.set(savedData, forKey: "people")
     }
 
     func addNewPerson() {
@@ -44,6 +63,8 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         collectionView?.reloadData()
         
         dismiss(animated: true)
+        
+        savePeople()
     }
     
     func getDocumentsDirectory() -> URL {
@@ -84,6 +105,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
             person.name = newName.text ?? ""
             
             self.collectionView?.reloadData()
+            self.savePeople()
         })
         
         present(alert, animated: true)
