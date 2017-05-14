@@ -50,6 +50,9 @@
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="JAS-Am-tDF">
                                 <rect key="frame" x="101" y="468" width="205" height="31"/>
+                                <connections>
+                                    <action selector="intensityChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="FuV-Hc-xOF"/>
+                                </connections>
                             </slider>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vcs-5b-OhO">
                                 <rect key="frame" x="32" y="504" width="120" height="44"/>
@@ -57,6 +60,9 @@
                                     <constraint firstAttribute="height" constant="44" id="bIQ-Hc-2h0"/>
                                 </constraints>
                                 <state key="normal" title="Change Filter"/>
+                                <connections>
+                                    <action selector="changeFilter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="482-Vk-WxM"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yW2-oc-3k4">
                                 <rect key="frame" x="243" y="504" width="55" height="44"/>
@@ -64,6 +70,9 @@
                                     <constraint firstAttribute="width" constant="55" id="kfA-ih-FTk"/>
                                 </constraints>
                                 <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="save:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DW1-tZ-RMU"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -87,6 +96,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="iqE-RE-gfa"/>
+                    <connections>
+                        <outlet property="imageView" destination="swy-Ui-psv" id="nLs-45-fqr"/>
+                        <outlet property="intensity" destination="JAS-Am-tDF" id="edl-wC-xm4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
