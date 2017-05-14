@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import CoreImage
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     var currentImage: UIImage!
+    var context: CIContext!
+    var currentFilter: CIFilter!
     
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var intensity: UISlider!
@@ -28,6 +31,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         super.viewDidLoad()
         
         navBarSetup()
+        
+        context = CIContext()
+        currentFilter = CIFilter(name: "CISepiaTone")
     }
 
     override func didReceiveMemoryWarning() {
