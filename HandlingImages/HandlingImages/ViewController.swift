@@ -8,8 +8,10 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    var currentImage: UIImage!
+    
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var intensity: UISlider!
     
@@ -24,7 +26,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        navBarSetup()
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,6 +35,28 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        guard let image = info[UIImagePickerControllerEditedImage] as? UIImage else { return }
+        
+        dismiss(animated: true)
+        
+        currentImage = image
+    }
 
+    func navBarSetup(){
+        
+        title = "Handle It"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(importPicture))
+    }
+    
+    func importPicture() {
+        
+        let picker = UIImagePickerController()
+        
+        picker.allowsEditing = true
+        picker.delegate = self
+        
+        present(picker, animated: true)
+    }
 }
 
