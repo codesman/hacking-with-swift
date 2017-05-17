@@ -24,7 +24,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         alert.addAction(UIAlertAction(title: "CIBumpDistortion", style: .default, handler: setFilter))
         alert.addAction(UIAlertAction(title: "CIGaussianBlur", style: .default, handler: setFilter))
-        alert.addAction(UIAlertAction(title: "CIPixelate", style: .default, handler: setFilter))
+        alert.addAction(UIAlertAction(title: "CIPixellate", style: .default, handler: setFilter))
         alert.addAction(UIAlertAction(title: "CISepiaTone", style: .default, handler: setFilter))
         alert.addAction(UIAlertAction(title: "CIBumpDistortion", style: .default, handler: setFilter))
         alert.addAction(UIAlertAction(title: "CITwirl", style: .default, handler: setFilter))
@@ -89,7 +89,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let inputKeys = currentFilter.inputKeys
         
         if inputKeys.contains(kCIInputIntensityKey) {
-            currentFilter.setValue(intensity, forKey: kCIInputIntensityKey)
+            currentFilter.setValue(intensity.value, forKey: kCIInputIntensityKey)
         }
         
         if inputKeys.contains(kCIInputRadiusKey) {
@@ -126,5 +126,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         present(picker, animated: true)
     }
+    
+    
 }
 
