@@ -14,6 +14,7 @@ class GameScene: SKScene {
     var slots = [WhackSlot]()
     var gameScore: SKLabelNode!
     var popUpTime = 0.85
+    var round = 0
     
     var score: Int = 0 {
         didSet {
@@ -115,6 +116,23 @@ class GameScene: SKScene {
     }
     
     func createEnemy() {
+        
+        round += 1
+        
+        guard round < 30 else {
+            
+            for slot in slots {
+                slot.hide()
+            }
+            
+            let gameOver = SKSpriteNode(imageNamed: "gameOver")
+            gameOver.position = CGPoint(x: 512, y: 384)
+            gameOver.zPosition = 1
+            addChild(gameOver)
+            
+            return
+        }
+        
         popUpTime *= 0.991
         slots = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: slots) as! [WhackSlot]
         slots[0].show(hideTime: popUpTime)
