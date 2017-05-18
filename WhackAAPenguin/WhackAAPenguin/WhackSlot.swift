@@ -12,6 +12,8 @@ import SpriteKit
 class WhackSlot: SKSpriteNode {
 
     var characterNode: SKSpriteNode!
+    var isVisible = false
+    var isHit = false
     
     func configure(at position: CGPoint) {
         
@@ -32,5 +34,36 @@ class WhackSlot: SKSpriteNode {
         cropNode.addChild(characterNode)
         
         addChild(cropNode)
+    }
+    
+    func show(hideTime: Double) {
+        
+        guard !isVisible else { return }
+        
+        characterNode.run(SKAction.moveBy(x: 0, y: 80, duration: 0.05))
+        isVisible = true
+        isHit = false
+        
+        switch RandomInt(min: 0, max: 2) {
+        case 0:
+            characterNode.texture = SKTexture(imageNamed: "penguinGood")
+            characterNode.name = "characterFriend"
+        default:
+            characterNode.texture = SKTexture(imageNamed: "penguinEvil")
+            characterNode.name = "characterEnemy"
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + (hideTime * 3.5)) { [unowned self] in
+            
+            self.hide()
+        }
+    }
+    
+    func hide() {
+        
+        guard isVisible else { return }
+        
+        characterNode.run(SKAction.moveBy(x: 0, y: -80, duration: 0.05))
+        isVisible = false
     }
 }
