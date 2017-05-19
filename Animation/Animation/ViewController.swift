@@ -22,6 +22,8 @@ class ViewController: UIViewController {
         UIView.animate(
             withDuration: 1,
             delay: 0,
+            usingSpringWithDamping: 0.5,
+            initialSpringVelocity: 5,
             options: [],
             animations: { [unowned self] in self.switchAnimation() },
             completion: { [unowned self] (finished: Bool) in self.tap.isHidden = false }
