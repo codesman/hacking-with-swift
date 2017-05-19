@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Extension.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>SafariExtension.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -13,6 +18,11 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>9C3866661ECF4D93002CF5C2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9C38667F1ECF4E4F002CF5C2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
