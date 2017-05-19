@@ -31,7 +31,7 @@ class ViewController: UIViewController {
     func switchAnimation() {
         switch self.currentAnimation {
         case 0:
-            break
+            self.imageView.transform = CGAffineTransform(scaleX: 2, y: 2)
         default:
             break
         }
