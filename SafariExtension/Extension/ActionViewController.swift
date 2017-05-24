@@ -11,12 +11,20 @@ import MobileCoreServices
 
 class ActionViewController: UIViewController {
 
-    @IBOutlet weak var imageView: UIImageView!
+    var pageTitle = ""
+    var pageURL = ""
+    
+    @IBOutlet weak var script: UITextView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
     
+        setUpBarButton()
         loadPlist()
+    }
+    
+    func setUpBarButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
     }
 
     func loadPlist() {
@@ -26,10 +34,18 @@ class ActionViewController: UIViewController {
         
         itemProvider.loadItem(forTypeIdentifier: kUTTypePropertyList as String) { (dictionary, error) in
             
-            guard let itemDictionary = dictionary as? NSDictionary else { return }
-            guard let javaScriptValues = itemDictionary[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary else { return }
+            guard let itemDictionary = dictionary as? NSDictionary,
+                let javaScriptValues = itemDictionary[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary,
+                let title = javaScriptValues["title"] as? String,
+                let url = javaScriptValues["URL"] as? String
+                else { return }
             
-            print(javaScriptValues)
+            self.pageTitle = title
+            self.pageURL = url
+            
+            DispatchQueue.main.async {
+                self.title = self.pageTitle
+            }
         }
 
     }
@@ -38,10 +54,19 @@ class ActionViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    func returnItem() {
+        let item = NSExtensionItem()
+        let argument: NSDictionary = ["customJavaScript": script.text]
+        let webDictionary: NSDictionary = [NSExtensionJavaScriptFinalizeArgumentKey: argument]
+        let customJavaScript = NSItemProvider(item: webDictionary, typeIdentifier: kUTTypePropertyList as String)
+        
+        item.attachments = [customJavaScript]
+        
+        extensionContext!.completeRequest(returningItems: [item])
+    }
+    
     @IBAction func done() {
-        // Return any edited content to the host app.
-        // This template doesn't do anything, so we just echo the passed in items.
-        self.extensionContext!.completeRequest(returningItems: self.extensionContext!.inputItems, completionHandler: nil)
+        returnItem()
     }
 
 }
