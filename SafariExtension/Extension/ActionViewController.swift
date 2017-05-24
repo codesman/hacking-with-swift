@@ -16,17 +16,22 @@ class ActionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
+        loadPlist()
+    }
+
+    func loadPlist() {
         guard let inputItem = extensionContext?.inputItems.first as? NSExtensionItem else { return }
         guard let itemProvider = inputItem.attachments?.first as? NSItemProvider else { return }
         
-        itemProvider.loadItem(
-            forTypeIdentifier: kUTTypePropertyList as String,
-            options: [:],
-            completionHandler: { [unowned self] (dictionary, error) in
-                
-        })
-    }
+        itemProvider.loadItem(forTypeIdentifier: kUTTypePropertyList as String) { (dictionary, error) in
+            
+            guard let itemDictionary = dictionary as? NSDictionary else { return }
+            guard let javaScriptValues = itemDictionary[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary else { return }
+            
+            print(javaScriptValues)
+        }
 
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
