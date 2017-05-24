@@ -19,8 +19,45 @@ class ActionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
+        setUpNotifications()
         setUpBarButton()
         loadPlist()
+    }
+    
+    func setUpNotifications() {
+    
+        let notificationCenter = NotificationCenter.default
+        
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(adjustForKeyboard),
+            name: Notification.Name.UIKeyboardWillHide,
+            object: nil
+        )
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(adjustForKeyboard),
+            name: Notification.Name.UIKeyboardWillChangeFrame,
+            object: nil
+        )
+    }
+    
+    func adjustForKeyboard(notification: Notification) {
+        
+        guard let userInfo = notification.userInfo else { return }
+        guard let keyboardScreenEndFrame = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return }
+        
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame.cgRectValue, from: view.window)
+        
+        switch notification.name {
+        case Notification.Name.UIKeyboardWillHide:
+            script.contentInset = UIEdgeInsets.zero
+        default:
+            script.contentInset = UIEdgeInsets(top: 70, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+        }
+        
+        script.scrollIndicatorInsets = script.contentInset
+        script.scrollRangeToVisible(script.selectedRange)
     }
     
     func setUpBarButton() {
