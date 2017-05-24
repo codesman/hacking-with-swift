@@ -20,6 +20,7 @@ class ActionViewController: UIViewController {
     }
 
     func loadPlist() {
+        
         guard let inputItem = extensionContext?.inputItems.first as? NSExtensionItem else { return }
         guard let itemProvider = inputItem.attachments?.first as? NSItemProvider else { return }
         
