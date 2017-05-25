@@ -9,6 +9,10 @@
 import SpriteKit
 import GameplayKit
 
+enum ForceBomb {
+    case never, always, random
+}
+
 class GameScene: SKScene {
     
     var gameScore: SKLabelNode!
@@ -24,6 +28,8 @@ class GameScene: SKScene {
     var activeSliceFG: SKShapeNode!
     var activeSlicePoints = [CGPoint]()
     var swooshSoundIsActive = false
+    var activeEnemies = [SKSpriteNode]()
+    
     
     override func didMove(to view: SKView) {
         
@@ -35,6 +41,8 @@ class GameScene: SKScene {
         createSlices()
         
     }
+    
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
@@ -160,6 +168,71 @@ class GameScene: SKScene {
         run(swooshSound) { [unowned self] in
             self.swooshSoundIsActive = false
         }
+        
+    }
+    
+    func createEnemy(forceBomb: ForceBomb = .random) {
+        
+        var enemy: SKSpriteNode!
+        var enemyType = RandomInt(min: 0, max: 6)
+        
+        
+        switch forceBomb {
+        case .never:
+            enemyType = 1
+        case .always:
+            enemyType = 0
+        default:
+            break
+        }
+        
+        switch enemyType {
+        case 0: break
+            // bomb
+        default:
+            enemy = SKSpriteNode(imageNamed: "penguin")
+            run(SKAction.playSoundFileNamed("launch.caf", waitForCompletion: false))
+            enemy.name = "enemy"
+            
+        }
+        
+        
+        // Give enemy a random position
+        let randomPosition = CGPoint(x: RandomInt(min: 64, max: 960), y: -128)
+        enemy.position = randomPosition
+        
+        // Create a random angular velocity
+        let randomAngularVelocity = CGFloat(RandomInt(min: -6, max: 6)) / 2.0
+        
+        // Create a random x velocity
+        var randomXVelocity = 0
+        
+        switch randomPosition {
+        case let position where position.x < 256:
+            randomXVelocity = RandomInt(min: 8, max: 15)
+        case let position where position.x < 512:
+            randomXVelocity = RandomInt(min: 3, max: 5)
+        case let position where position.x < 768:
+            randomXVelocity = -RandomInt(min: 3, max: 5)
+        default:
+            randomXVelocity = -RandomInt(min: 8, max: 15)
+        }
+        
+        // Create a random y velocity
+        let randomYVelocity = RandomInt(min: 24, max: 32)
+        
+        // Assign circular physics to enemy
+        enemy.physicsBody = SKPhysicsBody(circleOfRadius: 64)
+        
+        guard enemy.physicsBody != nil else { return }
+        
+        enemy.physicsBody?.velocity = CGVector(dx: randomXVelocity * 40, dy: randomYVelocity * 40)
+        enemy.physicsBody?.angularVelocity = randomAngularVelocity
+        enemy.physicsBody?.collisionBitMask = 0
+        
+        
+        addChild(enemy)
+        activeEnemies.append(enemy)
         
     }
 }
