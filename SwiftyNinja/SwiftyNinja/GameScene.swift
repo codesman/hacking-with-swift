@@ -10,6 +10,14 @@ import SpriteKit
 import GameplayKit
 import AVFoundation
 
+enum SequenceType: Int {
+    case oneNoBomb, one, twoWithOneBomb, two, three, four, chain, fastChain
+}
+
+enum Chain {
+    case normal, fast
+}
+
 enum ForceBomb {
     case never, always, random
 }
@@ -31,7 +39,11 @@ class GameScene: SKScene {
     var swooshSoundIsActive = false
     var activeEnemies = [SKSpriteNode]()
     var bombSoundEffect: AVAudioPlayer!
-    
+    var popupTime = 0.9
+    var sequence: [SequenceType]!
+    var sequencePosition = 0
+    var chainDelay = 3.0
+    var nextSequencedQueued = true
     
     override func didMove(to view: SKView) {
         
@@ -42,9 +54,24 @@ class GameScene: SKScene {
         createLives()
         createSlices()
         
+        fireSequence()
     }
     
-    
+    func fireSequence(){
+        sequence = [.oneNoBomb, .oneNoBomb, .twoWithOneBomb, .twoWithOneBomb, .three, .one, .chain]
+        
+        for _ in 0...1000 {
+            guard let nextSequence = SequenceType(rawValue: RandomInt(min: 2, max: 7)) else {break}
+            sequence.append(nextSequence)
+        }
+        
+        DispatchQueue.main.asyncAfter(
+            deadline: .now() + 2,
+            execute: { [unowned self] in
+                self.tossEnemies()
+            }
+        )
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
@@ -84,6 +111,44 @@ class GameScene: SKScene {
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         touchesEnded(touches, with: event)
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        
+        switch activeEnemies.count {
+        case let count where count > 0:
+            for node in activeEnemies {
+                guard node.position.y < -140 else { break }
+                node.removeFromParent()
+                
+                guard let index = activeEnemies.index(of: node) else {break}
+                activeEnemies.remove(at: index)
+            }
+        default:
+            guard !nextSequencedQueued else { break }
+            
+            DispatchQueue.main.asyncAfter(
+                deadline: .now() + popupTime,
+                execute: { [unowned self] in
+                    self.tossEnemies()
+                }
+            )
+            
+            nextSequencedQueued = true
+        }
+        
+        var bombCount = 0
+        for node in activeEnemies {
+            if node.name == "bombContainer" {
+                bombCount += 1
+                break
+            }
+        }
+        
+        if bombCount == 0 && bombSoundEffect != nil {
+            bombSoundEffect.stop()
+            bombSoundEffect = nil
+        }
     }
     
     func redrawActiveSlice() {
@@ -267,18 +332,59 @@ class GameScene: SKScene {
         activeEnemies.append(enemy)
     }
     
-    override func update(_ currentTime: TimeInterval) {
-        var bombCount = 0
-        for node in activeEnemies {
-            if node.name == "bombContainer" {
-                bombCount += 1
-                break
-            }
+    func tossEnemies() {
+        popupTime *= 0.991
+        chainDelay += 0.99
+        physicsWorld.speed *= 1.02
+        
+        let sequenceType = sequence[sequencePosition]
+        
+        switch sequenceType {
+        case .oneNoBomb:
+            createEnemy(forceBomb: .never)
+        case .one:
+            createEnemy()
+        case .twoWithOneBomb:
+            createEnemy(forceBomb: .never)
+            createEnemy(forceBomb: .always)
+        case .two:
+            createEnemies(2)
+        case .three:
+            createEnemies(3)
+        case .four:
+            createEnemies(4)
+        case .chain:
+            createChain(type: .normal, length: 4, delay: chainDelay )
+        case .fastChain:
+            createChain(type: .fast, length: 4, delay: chainDelay )
         }
         
-        if bombCount == 0 && bombSoundEffect != nil {
-            bombSoundEffect.stop()
-            bombSoundEffect = nil
+        sequencePosition += 1
+        nextSequencedQueued = false
+    }
+    
+    func createEnemies(_ number: Int){
+        for _ in 1...number {
+            createEnemy()
+        }
+    }
+    
+    func createChain(type: Chain, length: Int, delay: Double ) {
+        var timeFactor = 0.0
+        
+        switch type {
+        case .normal:
+            timeFactor = 5.0
+        case .fast:
+            timeFactor = 10.0
+        }
+        for multiplier in 1...4 {
+            DispatchQueue.main.asyncAfter(
+                deadline: .now() + (chainDelay / timeFactor * Double(multiplier)),
+                execute: { [unowned self] in
+                    self.createEnemy()
+                }
+            )
         }
     }
 }
