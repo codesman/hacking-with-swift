@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import AVFoundation
 
 enum ForceBomb {
     case never, always, random
@@ -29,6 +30,7 @@ class GameScene: SKScene {
     var activeSlicePoints = [CGPoint]()
     var swooshSoundIsActive = false
     var activeEnemies = [SKSpriteNode]()
+    var bombSoundEffect: AVAudioPlayer!
     
     
     override func didMove(to view: SKView) {
@@ -187,13 +189,43 @@ class GameScene: SKScene {
         }
         
         switch enemyType {
-        case 0: break
+        case 0:
             // bomb
+            // Create SKSpriteNode to hold fuse and bomb image as children
+            // Set it's z position to 1
+            enemy = SKSpriteNode()
+            enemy.zPosition = 1
+            enemy.name = "bombContainer"
+            
+            // Create the bomb image
+            let bombImage = SKSpriteNode(imageNamed: "sliceBomb")
+            bombImage.name = "bommb"
+            
+            enemy.addChild(bombImage)
+            
+            // If fuse sound effect is playing, stop and destroy
+            if bombSoundEffect != nil {
+                bombSoundEffect.stop()
+                bombSoundEffect = nil
+            }
+            
+            // Create new bomb fuse sound effect, then play it
+            guard let path = Bundle.main.path(forResource: "sliceBombFuse", ofType: "caf") else { return }
+            let url = URL(fileURLWithPath: path)
+            guard let sound = try? AVAudioPlayer(contentsOf: url) else { return }
+            
+            bombSoundEffect = sound
+            sound.play()
+            
+            // Create a particle emitter node, positioned at the end of the bomb image fuse and add to container
+            guard let emitter = SKEmitterNode(fileNamed: "sliceFuse") else { return }
+            emitter.position = CGPoint(x: 76, y: 64)
+            enemy.addChild(emitter)
+            
         default:
             enemy = SKSpriteNode(imageNamed: "penguin")
             run(SKAction.playSoundFileNamed("launch.caf", waitForCompletion: false))
             enemy.name = "enemy"
-            
         }
         
         
@@ -233,6 +265,20 @@ class GameScene: SKScene {
         
         addChild(enemy)
         activeEnemies.append(enemy)
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        var bombCount = 0
+        for node in activeEnemies {
+            if node.name == "bombContainer" {
+                bombCount += 1
+                break
+            }
+        }
         
+        if bombCount == 0 && bombSoundEffect != nil {
+            bombSoundEffect.stop()
+            bombSoundEffect = nil
+        }
     }
 }
