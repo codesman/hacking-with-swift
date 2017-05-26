@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet var mapView: MKMapView!
     
@@ -30,6 +30,44 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        // Define reuse identifier
+        let identifier = "Capital"
+        
+        // Check if is a view or Capital
+        if annotation is Capital {
+            // Try to deque annotation view from unused views
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+            
+            // If no view is available, create a new one
+            if annotationView == nil {
+                // Create a new UIButton with detailDisclosure type
+                annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                annotationView?.canShowCallout = true
+                
+                let button = UIButton(type: .detailDisclosure)
+                annotationView?.rightCalloutAccessoryView = button
+            } else {
+                // if can reuse view, update the view
+                annotationView?.annotation = annotation
+            }
+            
+            return annotationView
+        }
+        
+        // if not from Capital city, must return nil and use a default view
+        return nil
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        guard let capital = view.annotation as? Capital else {return}
+        
+        let placeName = capital.title
+        let placeInfo = capital.info
+        
+        let alert = UIAlertController(title: placeName, message: placeInfo, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
 }
 
